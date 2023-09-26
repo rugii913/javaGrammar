@@ -2,12 +2,6 @@ package jungsuk.ch02;
 
 // p.36 ~ 39 형식화된 출력 - 형식 지시자(format specifier)
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.Arrays;
-
 /**
  *    (별도 참고) format string syntax
  *    - Formatter: 클래스 소스 파일 상단 docs 참고
@@ -30,7 +24,7 @@ import java.util.Arrays;
  *    - The required conversion is a character indicating how the argument should be formatted. The set of valid conversions for a given argument depends on the argument's data type.
  *      - conversion: 인자가 어떤 형식으로 포매팅될 것인지 지정 => d, o, x, c, s, ... 등 conversion은 format specifiers의 필수 요소임
  */
-public class PrintfEx1And2 implements Runnable {
+public class PrintfEx1And2 {
 
     public void printfNumbers_byte_short_char() {
         System.out.println("printfNumbers_byte_short_char()");
@@ -141,63 +135,5 @@ public class PrintfEx1And2 implements Runnable {
         System.out.printf("[%.8s]%n", url);
         // 출력 결과: [www.code] -> %s conversion에 precision이 있는 경우 앞에서부터 해당 글자만큼 출력
         System.out.println("============================================================");
-    }
-
-    private final Class<? extends Runnable> clazzOfThis = this.getClass();
-
-    @Override
-    public void run() {
-        Constructor<? extends Runnable> constructor = getDefaultConstructor();
-        invokeDeclaredPublicMethodsExceptRunMethod(constructor, clazzOfThis.getDeclaredMethods());
-    }
-
-    private Constructor<? extends Runnable> getDefaultConstructor() {
-        Constructor<? extends Runnable> constructor;
-
-        try {
-            constructor = clazzOfThis.getConstructor();
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
-
-        return constructor;
-    }
-
-    private void invokeDeclaredPublicMethodsExceptRunMethod(Constructor<? extends Runnable> constructor, Method[] declaredMethods) {
-        Runnable runnable;
-
-        try {
-            runnable = constructor.newInstance();
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-
-        Arrays.stream(declaredMethods)
-                .filter(method -> !method.getName().equals("run") && method.getModifiers() == Modifier.PUBLIC)
-                .forEach(method -> invokeWithExceptionHandling(method, runnable));
-
-        /*
-        // 같은 기능
-        for (Method declaredMethod : declaredMethods) {
-            try {
-                if (declaredMethod.getName().equals("run")) {
-                    continue;
-                }
-                if (declaredMethod.getModifiers() == Modifier.PUBLIC) {
-                    declaredMethod.invoke(runnable);
-                }
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        */
-    }
-
-    private void invokeWithExceptionHandling(Method method, Runnable runnable) {
-        try {
-            method.invoke(runnable);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
