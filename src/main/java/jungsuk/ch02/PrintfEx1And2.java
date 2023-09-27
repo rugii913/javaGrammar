@@ -118,6 +118,7 @@ public class PrintfEx1And2 {
         // %[argument_index$][flags][width][.precision]conversion에서 %[width][.precision]conversion 형태라고 보면 된다.
         System.out.printf("d = %014.10f%n", d); // flag = 0, width = 14, precision = .10
         // 출력 결과: d = 001.2345678900 // 소수점도 한자리를 차지함
+        System.out.println("width + precision 관련, FloatEx의 printfFloat()도 확인할 것");
 
         System.out.println("============================================================");
     }

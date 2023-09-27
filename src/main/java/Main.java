@@ -1,10 +1,10 @@
 import jungsuk.JungsukExRunner;
-import jungsuk.ch02.OverflowEx;
+import jungsuk.ch02.FloatEx;
 
 public class Main {
 
     public static void main(String[] args) {
-        Runnable exRunner = new JungsukExRunner(OverflowEx.class);
+        Runnable exRunner = new JungsukExRunner(FloatEx.class);
         exRunner.run();
     }
 }
