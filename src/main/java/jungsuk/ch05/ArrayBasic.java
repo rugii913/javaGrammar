@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-// ch04 p.182 array: 배열 기초-범위 초과 예외, 길이 0 배열, 생성+초기화, Arrays.toString, System.arrayCopy
+// ch05 p.182 array: 배열 기초-범위 초과 예외, 길이 0 배열, 생성+초기화, Arrays.toString, System.arrayCopy
 public class ArrayBasic {
     /*
      * array(배열): 같은 타입의 여러 변수를 하나의 묶음으로 다루는 것 - 배열은 각 저장공간이 연속적으로 배치됨

@@ -1,6 +1,6 @@
 package jungsuk.ch05;
 
-// ch04 p.208 char[]과 String
+// ch05 p.208 char[]과 String
 public class CharArrayAndString {
     /*
     * TODO: char, char[], CharSequence, String에 대해서 더 생각해볼 것
