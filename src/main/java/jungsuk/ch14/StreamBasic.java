@@ -228,10 +228,11 @@ public class StreamBasic {
 
         int[] intArray = {1, 2, 3};
         IntStream intStream1 = IntStream.of(intArray);
-        IntStream intStream2 = IntStream.range(20, 99);
+        IntStream intStream2 = IntStream.range(90, 95);
 
         IntStream concat = IntStream.concat(intStream1, intStream2);
         // 물론 IntStream 뿐만 아니라 Stream<T>에도 concat(~) static method가 있음
+        concat.forEach(System.out::println);
 
         System.out.println("============================================================");
     }
