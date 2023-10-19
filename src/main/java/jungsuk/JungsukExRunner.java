@@ -31,6 +31,14 @@ public class JungsukExRunner implements Runnable {
 
         if (this.targetMethod == null) {
             invokeDeclaredPublicMethods(constructor, targetClass.getDeclaredMethods());
+            /*
+            * TODO
+            *  (1) https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/reflect/package-summary.html Java programming language and JVM modeling in core reflection 읽어보기
+            *  (2) 선언된 메서드 순서대로 실행하고 싶은데 쉽진 않은 듯  cf. getDeclaredMethods()는 "The elements in the returned array are not sorted and are not in any particular order."
+            *   - https://stackoverflow.com/questions/28585843/java-reflection-getdeclaredmethods-in-declared-order-strange-behaviour
+            *   - https://stackoverflow.com/questions/3148274/get-declared-methods-in-order-they-appear-in-source-code
+            *    => 정말 하고 싶다면 class 파일을 파싱해야할 듯하다.
+            * */
 
         } else {
             Object object;
