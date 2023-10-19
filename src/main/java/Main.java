@@ -1,12 +1,11 @@
 import jungsuk.JungsukExRunner;
-import jungsuk.ch14.LambdaMethodReference;
-import jungsuk.ch14.StreamBasic;
+import jungsuk.ch14.Stream01Basic;
 
 public class Main {
 
     public static void main(String[] args) {
-        Runnable exRunner = new JungsukExRunner(StreamBasic.class);
-        Runnable exSingleMethodRunner = new JungsukExRunner(StreamBasic.class, "createStreamByConcatenation");
+        Runnable exRunner = new JungsukExRunner(Stream01Basic.class);
+        Runnable exSingleMethodRunner = new JungsukExRunner(Stream01Basic.class, "createStreamByConcatenation");
 
         // 클래스 전체 예제 메서드 run()
         // exRunner.run();

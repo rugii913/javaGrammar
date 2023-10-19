@@ -2,7 +2,7 @@ package jungsuk.ch14;
 
 // ch.14 p.799 람다식
 // 예제에서는 MyFunction이라는 인터페이스를 따로 정의했으나, 굳이 그럴 필요는 없어서 Runnable 사용
-public class LambdaBasic {
+public class Lambda01Basic {
     /*
      * ***** functional interface 타입이 들어갈 자리에 람다식을 넣을 수 있다고 생각하면 된다. *****
      */

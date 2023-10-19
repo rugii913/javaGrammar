@@ -13,7 +13,7 @@ import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 // ch.14 p.814 스트림
-public class StreamBasic {
+public class Stream01Basic {
     /*
     * 스트림 (cf. JDK 1.8부터 lambda expression, @FunctionalInterface, Stream, Optional 시작) TODO 정확하게 찾아볼 것
     * ㅁ 왜 사용하는가?

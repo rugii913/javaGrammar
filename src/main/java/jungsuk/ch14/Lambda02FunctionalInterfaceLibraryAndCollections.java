@@ -10,7 +10,7 @@ import java.util.function.IntSupplier;
 import java.util.function.IntUnaryOperator;
 
 // ch.14 p.802 java.util.function 패키지 - 함수형 인터페이스 + 이를 arg로 받는 Java 컬렉션 프레임워크의 메서드들
-public class LambdaFunctionalInterfaceLibraryAndCollections {
+public class Lambda02FunctionalInterfaceLibraryAndCollections {
     /*
      * (p.803)
      * Runnable void run() 매개변수 x 반환값 x // cf. 이것만 java.lang 패키지, 나머지는 java.util.function 패키지

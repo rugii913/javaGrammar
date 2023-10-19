@@ -6,7 +6,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 // ch.14 p.812 메서드 참조
-public class LambdaMethodReference {
+public class Lambda04MethodReference {
 
     /*
     * method reference

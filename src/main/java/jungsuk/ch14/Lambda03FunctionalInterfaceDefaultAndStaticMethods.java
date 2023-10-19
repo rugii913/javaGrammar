@@ -4,7 +4,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 // ch.14 p.808 Function의 합성과 Predicate의 결합
-public class LambdaFunctionalInterfaceDefaultAndStaticMethods {
+public class Lambda03FunctionalInterfaceDefaultAndStaticMethods {
 
     // p.808 ~ 809 및 p.811 예제 14-7 관련
     public void functionDefaultMethods_AndThen_Compose() {
