@@ -1,93 +1,46 @@
 package jungsuk;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class JungsukExRunner implements Runnable {
 
-    private final Class<?> targetClass;
-    private Method targetMethod = null;
+    private static Runnable runnable;
 
-    public JungsukExRunner(Class<?> targetClass) {
-        this.targetClass = targetClass;
+    private JungsukExRunner(Class<?> targetClass, String methodName) {
+        if (methodName == null || methodName.isBlank()) {
+            runnable = JungsukExClassRunner.of(targetClass);
+        } else {
+            try {
+                runnable = JungsukExMethodRunner.of(targetClass, methodName);
+            } catch (NoSuchMethodException e) {
+                Logger logger = Logger.getLogger("jungsuk.JungsukExRunner");
+                logger.log(Level.WARNING, "해당 이름과 일치하는 메서드가 없습니다.", e);
+                logger.log(Level.WARNING, "메서드 실행 대신 클래스 실행으로 전환합니다.");
+                runnable = JungsukExClassRunner.of(targetClass);
+
+                /*
+                System.out.println("=============================================================================");
+                System.out.println("이름이 일치하는 메서드가 존재하지 않으므로, 입력된 클래스의 모든 메서드를 실행한 결과입니다.");
+                logger.log(Level.WARNING, "=============================================================================");
+                logger.log(Level.WARNING, "이름이 일치하는 메서드가 존재하지 않으므로, 입력된 클래스의 모든 메서드를 실행한 결과입니다.");
+
+                TODO 아래 사항 원인 확인 후, 클래스 모든 메서드 실행 후 로그 남기는 것으로 개선해볼 것
+                    - 실행 시킨 후 마지막에 메시지를 더 추가하고 싶었는데 runnable 실행 후 로그가 뜨는 게 아니라 runnable 실행 전 에러 로그가 뜸
+                    - 혹시나 해서 System.out.println으로 바꾸었는데, 에러 로그보다는 늦게 뜨지만 여전히 runnable보다는 빨리 실행됨
+                    - wait(1000); 메서드를 추가해보았는데, 에러가 발생함
+                    - 혹시 다른 스레드를 사용하는지 확인하기 위해 System.out.println(Thread.currentThread().getName());를 찍어보았는데, 같은 main 스레드에서 실행되는 것으로 확인됨   
+                */
+            }
+        }
     }
 
-    public JungsukExRunner(Class<?> targetClass, String methodName) {
-        this.targetClass = targetClass;
-
-        try {
-            this.targetMethod = targetClass.getMethod(methodName);
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException("입력된 이름을 가진 메서드가 없음", e);
-        }
+    public static Runnable of(Class<?> targetClass, String methodName) {
+        return new JungsukExRunner(targetClass, methodName);
     }
 
     @Override
     public void run() {
-        Constructor<?> constructor = getDefaultConstructor();
-
-        if (this.targetMethod == null) {
-            invokeDeclaredPublicMethods(constructor, targetClass.getDeclaredMethods());
-            /*
-            * TODO
-            *  (1) https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/reflect/package-summary.html Java programming language and JVM modeling in core reflection 읽어보기
-            *  (2) 선언된 메서드 순서대로 실행하고 싶은데 쉽진 않은 듯  cf. getDeclaredMethods()는 "The elements in the returned array are not sorted and are not in any particular order."
-            *   - https://stackoverflow.com/questions/28585843/java-reflection-getdeclaredmethods-in-declared-order-strange-behaviour
-            *   - https://stackoverflow.com/questions/3148274/get-declared-methods-in-order-they-appear-in-source-code
-            *    => 정말 하고 싶다면 class 파일을 파싱해야할 듯하다.
-            * */
-
-        } else {
-            Object object;
-
-            try {
-                object = constructor.newInstance();
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                throw new RuntimeException(e);
-            }
-
-            try {
-                targetMethod.invoke(object); // TODO ***** 왜 정확한 타입 정보 없이 Object 타입일 뿐인데도 invoke할 수 있는지 찾아볼 것 *****
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    private Constructor<?> getDefaultConstructor() {
-        Constructor<?> constructor;
-
-        try {
-            constructor = targetClass.getConstructor();
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
-
-        return constructor;
-    }
-
-    private void invokeDeclaredPublicMethods(Constructor<?> constructor, Method[] declaredMethods) {
-        Object object;
-
-        try {
-            object = constructor.newInstance();
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-
-        Arrays.stream(declaredMethods)
-                .filter(method -> method.getModifiers() == Modifier.PUBLIC)
-                .forEach(method -> invokeWithExceptionHandling(method, object));
-    }
-
-    private void invokeWithExceptionHandling(Method method, Object object) {
-        try {
-            method.invoke(object);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
+        runnable.run();
     }
 }
