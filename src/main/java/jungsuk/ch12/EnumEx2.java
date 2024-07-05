@@ -34,6 +34,7 @@ public class EnumEx2 {
         EAST(1, "→"), SOUTH(2, "↓"), WEST(3, "←"), NORTH(4, "↑");
 
         private static final Direction[] DIRECTIONS = Direction.values();
+        // private int value; // 문법적으로 가능은 하지만 별로 좋지 않은 방식일 것
         private final int value;
         private final String symbol;
 
@@ -42,6 +43,10 @@ public class EnumEx2 {
             this.symbol = symbol;
         }
 
+//        public void setValue(int newValue) {
+//            this.value = newValue; // 문법적으로 가능은 하지만 별로 좋지 않은 방식일 것
+//        }
+        
         public int getValue() {
             return value;
         }
